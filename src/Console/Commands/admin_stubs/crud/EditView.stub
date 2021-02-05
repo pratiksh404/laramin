@@ -1,0 +1,15 @@
+@extends('admin.layouts.app')
+
+@section('content')
+<x-laramin-edit-page name="{{modelNameSinglularLowerCase}}" route="{{modelNameSinglularLowerCase}}" :model="${{modelNameSinglularLowerCase}}">
+    <x-laramin-slot name="content">
+        {{-- ================================Form================================ --}}
+        @include('admin.layouts.module.{{modelNameSinglularLowerCase}}.edit_add')
+        {{-- =================================================================== --}}
+    </x-laramin-slot>
+</x-laramin-edit-page>
+@endsection
+
+@section('custom_js')
+@include('admin.layouts.module.{{modelNameSinglularLowerCase}}.scripts')
+@endsection

@@ -1,0 +1,61 @@
+{
+    "name": "pratiksh/laramin",
+    "description": "Admin Panel Starter Kit",
+    "keywords": [
+        "pratiksh",
+        "laramin"
+    ],
+    "homepage": "https://github.com/pratiksh/laramin",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Pratik Shrestha",
+            "email": "pratikdai404@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "drh2so4/thumbnail": "^1.0",
+        "spatie/laravel-activitylog": "^3.16",
+        "laravel/ui": "^3.1"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0",
+        "barryvdh/laravel-debugbar": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pratiksh\\Laramin\\": "src"
+        },
+         "files": [
+          "src/Helpers/AdminRouteHelper.php",
+          "src/Helpers/AdminHelper.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pratiksh\\Laramin\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pratiksh\\Laramin\\Providers\\LaraminServiceProvider"
+            ],
+            "aliases": {
+                "Laramin": "Pratiksh\\Laramin\\LaraminFacade"
+            }
+        }
+    }
+}

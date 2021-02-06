@@ -1,7 +1,7 @@
-@extends('laramin::admin.layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
-<x-laramin-index-page name="permission" route="permission">
+<x-index-page name="permission" route="permission">
     <x-slot name="content">
         {{-- ================================Card================================ --}}
         <table class="table table-striped table-bordered datatable">
@@ -15,6 +15,8 @@
                     <th>Delete</th>
                     <th>Role</th>
                     <th>Model</th>
+                    <th>Name</th>
+                    <th>Can</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -48,8 +50,12 @@
                     <td>
                         {{$permission->model}}
                     </td>
+                    <td>{{$permission->name ?? "N/A"}}</td>
+                    <td><span
+                            class="badge badge-{{isset($permission->can) ? ($permission->can ? "success" : "danger") : "primary"}}">{{isset($permission->can) ? ($permission->can ? "Can" : "Cannot") : "N/A"}}</span>
+                    </td>
                     <td>
-                        <x-laramin-action :model="$permission" route="permission" show="0" />
+                        <x-action :model="$permission" route="permission" show="0" />
                     </td>
                 </tr>
                 @endforeach
@@ -64,15 +70,17 @@
                     <th>Delete</th>
                     <th>Role</th>
                     <th>Model</th>
+                    <th>Name</th>
+                    <th>Can</th>
                     <th>Actions</th>
                 </tr>
             </tfoot>
         </table>
         {{-- =================================================================== --}}
     </x-slot>
-</x-laramin-index-page>
+</x-index-page>
 @endsection
 
 @section('custom_js')
-@include('laramin::admin.layouts.module.permission.scripts')
+@include('admin.layouts.module.permission.scripts')
 @endsection

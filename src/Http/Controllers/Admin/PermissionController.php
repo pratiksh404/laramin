@@ -82,7 +82,7 @@ class PermissionController extends Controller
     public function update(PermissionRequest $request, Permission $permission)
     {
         $this->permissionRepositoryInterface->updatePermission($request, $permission);
-        return redirect(adminRedirectRoute('Permission'))->withInfo('Permission Updated Successfully.');
+        return redirect(adminRedirectRoute('permission'))->withInfo('Permission Updated Successfully.');
     }
 
     /**
@@ -94,6 +94,6 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $this->permissionRepositoryInterface->destroyPermission($permission);
-        return redirect(adminRedirectRoute('Permission'))->withFail('Permission Deleted Successfully.');
+        return redirect(adminRedirectRoute('permission'))->withFail('Permission Deleted Successfully.');
     }
 }

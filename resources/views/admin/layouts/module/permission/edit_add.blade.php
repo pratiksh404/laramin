@@ -11,7 +11,9 @@
                 <option selected disabled>Select Role .. </option>
                 @isset($roles)
                 @foreach ($roles as $role)
-                <option value="{{$role->id}}">{{$role->name}}</option>
+                <option value="{{$role->id}}"
+                    {{isset($permission) ? ($permission->role->id == $role->id ? "selected" : "") : ""}}>{{$role->name}}
+                </option>
                 @endforeach
                 @endisset
             </select>
@@ -20,8 +22,8 @@
     <div class="col-lg-2">
         <label for="can">Can/Cannot</label> <br>
         <input type="hidden" name="can" value="0">
-        <input type="checkbox" class="switch" value="1"
-            checked="{{isset($permission->can) ? ($permission->can ? 'checked' : '') : ''}}" />
+        <input type="checkbox" class="switch" value="1" name="can"
+            {{isset($permission->can) ? ($permission->can ? 'checked' : '') : ''}} />
     </div>
 </div>
 <br>

@@ -43,7 +43,8 @@ class PermissionRepository implements PermissionRepositoryInterface
     // Permission Edit
     public function editPermission(Permission $permission)
     {
-        return compact('permission');
+        $roles = Cache::get('roles', Role::all(['id', 'name']));
+        return compact('permission', 'roles');
     }
 
     // Permission Update

@@ -1,9 +1,9 @@
 <?php
 
-namespace Pratiksh\Laramin\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Services\MakeSuperAdmin;
 use Illuminate\Console\Command;
-use Pratiksh\Laramin\Services\MakeSuperAdmin;
 
 class MakeSuperUserCommand extends Command
 {

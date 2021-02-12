@@ -1,10 +1,10 @@
 <?php
 
-namespace Pratiksh\Laramin\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Services\CRUDGeneratorService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Pratiksh\Laramin\Services\CRUDGeneratorService;
 
 class MakeCRUDGeneratorCommand extends Command
 {

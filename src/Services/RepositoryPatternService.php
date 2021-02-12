@@ -1,13 +1,17 @@
 <?php
 
-namespace Pratiksh\Laramin\Services;
+namespace App\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
-use Pratiksh\Laramin\Services\CommandHelper;
 
-class RepositoryPatternService extends CommandHelper
+class RepositoryPatternService
 {
+    protected static function getStubs($type)
+    {
+        return file_get_contents(app_path("Console/Commands/admin_stubs/$type.stub"));
+    }
+
     public static function ImplementNow($name, $makeRequest = false)
     {
         if (!file_exists($repository_path = app_path('/Repositories'))) {

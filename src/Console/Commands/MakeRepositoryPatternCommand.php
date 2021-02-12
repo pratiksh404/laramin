@@ -1,9 +1,9 @@
 <?php
 
-namespace Pratiksh\Laramin\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Services\RepositoryPatternService;
 use Illuminate\Console\Command;
-use Pratiksh\Laramin\Services\RepositoryPatternService;
 
 class MakeRepositoryPatternCommand extends Command
 {

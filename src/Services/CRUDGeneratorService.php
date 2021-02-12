@@ -1,13 +1,17 @@
 <?php
 
-namespace Pratiksh\Laramin\Services;
+namespace App\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
-use Pratiksh\Laramin\Services\CommandHelper;
 
-class CRUDGeneratorService extends CommandHelper
+class CRUDGeneratorService
 {
+    protected static function getStub($type)
+    {
+        return file_get_contents(app_path("Console/Commands/admin_stubs/$type.stub"));
+    }
+
     public static function makeCRUD($name, $console)
     {
         self::makeController($name, $console);
@@ -19,8 +23,6 @@ class CRUDGeneratorService extends CommandHelper
     // Make Controller
     protected static function makeController($name, $console)
     {
-        self::checkHttpAdminFolder();
-
         $controllerTemplate = str_replace(
             [
                 '{{modelName}}',
@@ -42,8 +44,6 @@ class CRUDGeneratorService extends CommandHelper
     // Make Model
     protected static function makeModel($name, $console)
     {
-        self::checkModelAdminFolder();
-
         $modelTemplate = str_replace(
             [
                 '{{modelName}}',
@@ -144,7 +144,7 @@ class CRUDGeneratorService extends CommandHelper
 
         $script_file = resource_path("views/admin/layouts/module/{$lowername}/scripts.blade.php");
         file_put_contents(resource_path("views/admin/layouts/module/{$lowername}/scripts.blade.php"), '');
-        self::fileMadeSuccess($console, $script_file, "script file");
+        self::fileMadeSuccess($console, $script_file, "Script file");
     }
 
     // Make Other neccesary CRUD files

@@ -1,14 +1,18 @@
 <?php
 
-namespace Pratiksh\Laramin\Services;
+namespace App\Services;
 
 use App\Models\Admin\Role;
 use Illuminate\Support\Str;
-use Pratiksh\Laramin\Models\Permission;
-use Pratiksh\Laramin\Services\CommandHelper;
+use App\Models\Admin\Permission;
 
-class MakePermission extends CommandHelper
+class MakePermission
 {
+    protected static function getStub($type)
+    {
+        return file_get_contents(app_path("Console/Commands/admin_stubs/$type.stub"));
+    }
+
     public static function makePermission($name, $role, $for_all, $only_flags = false)
     {
         self::addToDB($name, $role, $for_all);
@@ -56,11 +60,7 @@ class MakePermission extends CommandHelper
     // Make a Policy
     protected static function makePolicy($name, $only_flags)
     {
-
-        if (trim($name) != "User" || trim($name) != "user" && !$only_flags) {
-            if (!file_exists($path = app_path("/Policies"))) {
-                mkdir($path, 0777, true);
-            }
+        if (trim($name) != "User" || trim($name) != "user" || !$only_flags) {
             $policyTemplate = str_replace(
                 [
                     '{{modelName}}',

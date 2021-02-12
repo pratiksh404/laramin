@@ -1,9 +1,9 @@
 <?php
 
-namespace Pratiksh\Laramin\Console\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Pratiksh\Laramin\Services\MakeAPIResource;
+use App\Services\MakeAPIResource;
 
 class MakeAPIResourceCommand extends Command
 {
@@ -12,7 +12,7 @@ class MakeAPIResourceCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:api {name : Model Class (Singular), e.g role, Place, Car, Post}  {--rest}';
+    protected $signature = 'make:api {name : Model Class (Singular), e.g role, Place, Car, Post}  {--rest} {--client}';
 
     /**
      * The console command description.
@@ -43,6 +43,9 @@ class MakeAPIResourceCommand extends Command
         if ($this->option('rest')) {
             MakeAPIResource::makeRestAPI($name);
             $this->info("Restful API Resource created for model" . $name);
+        } elseif ($this->option('client')) {
+            MakeAPIResource::makeClientAPI($name);
+            $this->info("Client API created for model" . $name);
         } else {
             MakeAPIResource::makeAPI($name);
             $this->info("API Resource created for model" . $name);

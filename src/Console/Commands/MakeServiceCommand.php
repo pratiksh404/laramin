@@ -1,6 +1,6 @@
 <?php
 
-namespace Pratiksh\Laramin\Console\Commands;
+namespace App\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
 

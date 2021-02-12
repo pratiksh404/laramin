@@ -1,17 +1,27 @@
 <?php
 
-namespace Pratiksh\Laramin\Services;
+namespace App\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
-use Pratiksh\Laramin\Services\CommandHelper;
 
-class MakeAPIResource extends CommandHelper
+class MakeAPIResource
 {
+
+    protected static function getStub($type)
+    {
+        return file_get_contents(app_path("Console/Commands/admin_stubs/$type.stub"));
+    }
+
     public static function makeRestAPI($name)
     {
         // Making API Resource Controller
         self::makeRestAPIController($name);
+    }
+
+    public static function makeClientAPI($name)
+    {
+        self::makeClientAPIResource($name);
     }
 
     public static function makeAPI($name)
@@ -30,7 +40,7 @@ class MakeAPIResource extends CommandHelper
     protected static function makeResource($name)
     {
         Artisan::call('make:resource ' . $name . 'Resource');
-        Artisan::call('make:resource ' . 'Collection/' . $name . 'Collection');
+        Artisan::call('make:resource ' . $name . '/' . $name . 'Collection');
     }
 
     /**
@@ -86,5 +96,67 @@ class MakeAPIResource extends CommandHelper
             self::getStub('APIController')
         );
         file_put_contents(app_path("/Http/Controllers/Admin/API/{$name}ApiController.php"), $controllerTemplate);
+    }
+
+    /**
+     *
+     * Make Client API Resource
+     *
+     */
+    protected static function makeClientAPIResource($name)
+    {
+        if (!file_exists($path = app_path("/Http/Resources/Client/{$name}"))) {
+            mkdir($path, 0777, true);
+        }
+        // Making Collection
+        $clientCollectionTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            self::getStub('API/Client/Collection')
+        );
+        file_put_contents(app_path("/Http/Resources/Client/{$name}/{$name}Collection.php"), $clientCollectionTemplate);
+
+        // Making Resource
+        $clientResourceTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            self::getStub('API/Client/Resource')
+        );
+        file_put_contents(app_path("/Http/Resources/Client/{$name}/{$name}Resource.php"), $clientResourceTemplate);
+
+        // Making Controller
+        if (!file_exists($path = app_path('Http/Controllers/API'))) {
+            mkdir($path, 0777, true);
+        }
+        $controllerTemplate = str_replace(
+            [
+                '{{modelName}}',
+                '{{modelNamePluralLowerCase}}',
+                '{{modelNameSingularLowerCase}}'
+            ],
+            [
+                $name,
+                strtolower(Str::plural($name)),
+                strtolower($name)
+            ],
+            self::getStub('API/Client/APIController')
+        );
+        file_put_contents(app_path("/Http/Controllers/API/{$name}ApiController.php"), $controllerTemplate);
     }
 }

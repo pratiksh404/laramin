@@ -1,11 +1,10 @@
 <?php
 
-namespace Pratiksh\Laramin\Console\Commands;
+namespace App\Console\Commands;
 
+use App\Models\Admin\Role;
 use Illuminate\Console\Command;
-use Pratiksh\Laramin\Models\Role;
-use Pratiksh\Laramin\Services\MakePermission;
-
+use App\Services\MakePermission;
 
 class MakePermissionCommand extends Command
 {
@@ -46,7 +45,8 @@ class MakePermissionCommand extends Command
 
         $role = Role::find($role_id);
 
-        $only_flags = $this->option("onlyFlags");
+        $only_flags = $this->option("onlyFlags") ?? 0;
+
 
         if ($this->option('all')) {
             $for_all = $this->option('all');

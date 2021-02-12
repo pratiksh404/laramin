@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<x-laramin-create-page name="{{modelNameSinglularLowerCase}}" route="{{modelNameSinglularLowerCase}}">
-    <x-laramin-slot name="content">
+<x-create-page name="{{modelNameSinglularLowerCase}}" route="{{modelNameSinglularLowerCase}}">
+    <x-slot name="content">
         {{-- ================================Form================================ --}}
         @include('admin.layouts.module.{{modelNameSinglularLowerCase}}.edit_add')
         {{-- =================================================================== --}}
-    </x-laramin-slot>
-</x-laramin-create-page>
+    </x-slot>
+</x-create-page>
 @endsection
 
 @section('custom_js')

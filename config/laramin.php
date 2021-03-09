@@ -31,7 +31,7 @@ return [
     | 
     */
     'prefix' => 'admin',
-    'middleware' => ['web', 'auth', 'role:admin|user'],
+    'middleware' => ['web', 'auth'],
 
     // Register Route
     'register' => true,

@@ -16,22 +16,11 @@ class ActivityController extends Controller
     public function index()
     {
         if ($this->isAuthorized()) {
-            $activities = Activity::all();
+            $activities = Activity::latest()->get();
             return view('laramin::admin.activity.index', compact('activities'));
         } else {
             abort(403);
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Activity $activity)
-    {
-        //
     }
 
 
@@ -54,5 +43,40 @@ class ActivityController extends Controller
     private function isAuthorized(): bool
     {
         return Auth::user()->hasRole('admin') || Auth::user()->isSuperAdmin();
+    }
+
+    public function delete_all_activities()
+    {
+        DB::table('activity_log')->delete();
+        return redirect(adminRedirectRoute('activity'))->withSuccess('All Actitvities Deleted');
+    }
+
+    public function delete_last_month()
+    {
+        $start = new Carbon('first day of last month');
+        $end = new Carbon('last day of last month');
+        Activity::whereBetween('updated_at', [$start, $end])->delete();
+        return redirect(adminRedirectRoute('activity'))->withSuccess('All activities of last month deleted.');
+    }
+
+    public function keep_this_month_activities()
+    {
+        $start = new Carbon('first day of last month');
+        Activity::whereDate('updated_at', '<=', $start)->delete();
+        return redirect(adminRedirectRoute('activity'))->withSuccess('All activities except this month.');
+    }
+
+    public function keep_latest_two_month_activities()
+    {
+        $date = Carbon::now()->subMonths(2);
+        Activity::whereDate('updated_at', '<=', $date)->delete();
+        return redirect(adminRedirectRoute('activity'))->withSuccess('All activities deleted except last 2 months.');
+    }
+
+    public function keep_latest_three_month_activities()
+    {
+        $date = Carbon::now()->subMonths(3);
+        Activity::whereDate('updated_at', '<=', $date)->delete();
+        return redirect(adminRedirectRoute('activity'))->withSuccess('All activities deleted except last 3 months.');
     }
 }

@@ -14,9 +14,9 @@ class {{modelName}}Repository implements {{modelName}}RepositoryInterface
     {
         ${{modelNamePluralLowerCase}} = config('coderz.caching', true)
             ? (Cache::has('{{modelNamePluralLowerCase}}') ? Cache::get('{{modelNamePluralLowerCase}}') : Cache::rememberForever('{{modelNamePluralLowerCase}}', function () {
-                return {{modelName}}::all();
+                return {{modelName}}::latest()->get();
             }))
-            : {{modelName}}::all();
+            : {{modelName}}::latest()->get();
         return compact('{{modelNamePluralLowerCase}}');
     }
 

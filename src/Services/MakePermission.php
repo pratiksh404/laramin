@@ -61,20 +61,22 @@ class MakePermission
     protected static function makePolicy($name, $only_flags)
     {
         if (trim($name) != "User" || trim($name) != "user" || !$only_flags) {
-            $policyTemplate = str_replace(
-                [
-                    '{{modelName}}',
-                    '{{modelNamePluralLowerCase}}',
-                    '{{modelNameSingularLowerCase}}'
-                ],
-                [
-                    $name,
-                    strtolower(Str::plural($name)),
-                    strtolower($name)
-                ],
-                self::getStub('Policy')
-            );
-            file_put_contents(app_path("/Policies/{$name}Policy.php"), $policyTemplate);
+            if (trim($name) != "User" || trim($name) != "user" && !$only_flags) {
+                $policyTemplate = str_replace(
+                    [
+                        '{{modelName}}',
+                        '{{modelNamePluralLowerCase}}',
+                        '{{modelNameSingularLowerCase}}'
+                    ],
+                    [
+                        $name,
+                        strtolower(Str::plural($name)),
+                        strtolower($name)
+                    ],
+                    self::getStub('Policy')
+                );
+                file_put_contents(app_path("/Policies/{$name}Policy.php"), $policyTemplate);
+            }
         }
     }
 }

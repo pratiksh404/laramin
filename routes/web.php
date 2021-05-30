@@ -48,3 +48,11 @@ Route::post('make_role_module_permission/{role}', [RoleController::class, 'assig
 Route::get('detach_role_module_permission/{role}/{permission}', [RoleController::class, 'detachModulePermssion']);
 
 Route::patch('change_role_module_permission', [RoleController::class, 'changeModulePermission']);
+
+
+/* Activitiy Routes */
+$this->get('delete-all-activities', [ActivityController::class, 'delete_all_activities']);
+$this->get('delete-last-month', [ActivityController::class, 'delete_last_month']);
+$this->get('keep-this-month-activities', [ActivityController::class, 'keep_this_month_activities']);
+$this->get('keep-latest-two-month-activities', [ActivityController::class, 'keep_latest_two_month_activities']);
+$this->get('keep-latest-three-month-activities', [ActivityController::class, 'keep_latest_three_month_activities']);

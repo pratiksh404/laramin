@@ -1,9 +1,8 @@
 <?php
 
-namespace Pratiksh\Laramin\Traits;
+namespace App\Traits;
 
-use Pratiksh\Laramin\Models\Role;
-use Pratiksh\Laramin\Models\Profile;
+use App\Models\Admin\Role;
 
 trait HasRole
 {
@@ -15,18 +14,14 @@ trait HasRole
     // Check is user has given role
     public function hasRole($role)
     {
-        return $this->roles()->where('name', trim($role))->count() == 1;
+        return $this->roles->where('name', trim($role))->count() == 1;
     }
 
     // Check if user is superadmin
     public function isSuperAdmin()
     {
-        $superuser = Role::where('name', 'superadmin')->first();
-        if ($superuser) {
-            return $superuser->users->contains($this);
-        } else {
-            return false;
-        }
+        $roles = $this->roles->pluck('name')->toArray();
+        return in_array('superadmin', $roles);
     }
 
     // Check BREAD Access
@@ -43,10 +38,5 @@ trait HasRole
             }
         }
         return in_array(1, $can);
-    }
-
-    public function profile()
-    {
-        return $this->hasOne(Profile::class);
     }
 }

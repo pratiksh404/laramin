@@ -20,16 +20,14 @@ class MakeSuperAdmin
             'password' => bcrypt($password)
         ]);
 
-        if (Role::where('name', 'superadmin')->exists()) {
-            $role = Role::where('name', 'superadmin')->first();
-            $user->roles()->attach($role);
-        } else {
-            $role = Role::create([
+        $role = Role::where('name', 'superadmin')->exists()
+            ? Role::where('name', 'superadmin')->first()
+            : $role = Role::create([
                 'name' => 'superadmin',
                 'description' => 'This is super admin. This role has authority over everything in this application.',
                 'level' => 6
             ]);
-            $user->roles()->attach($role);
-        }
+        $user->roles()->attach($role);
+        $user->profile()->create();
     }
 }

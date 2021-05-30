@@ -59,7 +59,8 @@
                                     <div class="d-flex justify-content-between">
                                         <p class="card-text">
                                             {{ $card_text ?? "Create new ".$name." in the system" }} <br>
-                                            <span class="text-secondary">The field labels marked with * are required
+                                                <span class="text-secondary">The field labels marked with <span
+                                                    class="text-danger">*</span> are required
                                                 input fields.</span>
                                         </p>
                                         <div class="d-flex justify-content-center">
